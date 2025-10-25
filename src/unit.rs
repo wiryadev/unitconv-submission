@@ -33,7 +33,6 @@ impl UnitDimension for TempUnit {
     }
 }
 
-// LengthUnit implementation
 impl UnitDimension for LengthUnit {
     fn dimension_name(&self) -> &'static str {
         "Length"
@@ -64,7 +63,6 @@ impl LengthUnit {
 
 pub trait UnitDimension {
     fn dimension_name(&self) -> &'static str;
-    // Returns a vector of unit names (strings) for display.
     fn list_units(&self) -> Vec<String>;
 }
 

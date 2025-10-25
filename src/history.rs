@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::{fs, io};
+use crate::conversion::format_flexible_precision;
 
 const HISTORY_FILE: &str = "conversion.json";
 
@@ -37,7 +38,6 @@ pub fn add_and_save_entry(entry: HistoryEntry) -> Result<(), io::Error> {
     save_history(&history)
 }
 
-/// Prints the formatted history list to the console.
 pub fn display_history() -> Result<(), io::Error> {
     let history = load_history()?;
     
@@ -48,13 +48,12 @@ pub fn display_history() -> Result<(), io::Error> {
 
     println!("Conversion History:");
     for (i, entry) in history.iter().enumerate() {
-        // Format the output using the stored fields
         println!(
-            "{}. {:.4} {} = {:.4} {}", 
+            "{}. {} {} = {} {}", 
             i + 1, 
-            entry.original_value, 
+            format_flexible_precision(entry.original_value), 
             entry.original_unit, 
-            entry.target_value, 
+            format_flexible_precision(entry.target_value), 
             entry.target_unit
         );
     }

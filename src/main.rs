@@ -15,7 +15,6 @@ fn main() {
 
     match cmd.try_get_matches_from(std::env::args_os()) {
         Ok(matches) => {
-            // Success path: continue execution
             let cli =
                 Cli::from_arg_matches(&matches).expect("Failed to create Cli struct from matches");
             match cli.command {
@@ -49,9 +48,7 @@ fn main() {
             let pattern = r"(?i)--(from|to).*?: invalid unit: (\S+)";
 
             if let Some(captures) = regex::Regex::new(pattern).unwrap().captures(&err_string) {
-                // Group 1: The argument name ('from' or 'to')
                 let arg_name = captures.get(1).map_or("", |m| m.as_str());
-                // Group 2: The raw invalid input (e.g., 'kelvi')
                 let invalid_value = captures.get(2).map_or("", |m| m.as_str());
 
                 let unit_type = if arg_name == "from" {
@@ -60,12 +57,10 @@ fn main() {
                     "target"
                 };
 
-                // Print the desired error format and exit
                 eprintln!("[ERROR] invalid {} unit: {}", unit_type, invalid_value);
                 process::exit(1);
             }
 
-            // For all other clap errors, use clap's default print.
             e.print().expect("Failed to print clap error");
             process::exit(1);
         }

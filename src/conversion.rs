@@ -106,8 +106,6 @@ fn from_celsius(celsius: f64, to: &TempUnit) -> f64 {
     }
 }
 
-// --- Length Conversion Logic ---
-
 fn to_cm(value: f64, from: &LengthUnit) -> f64 {
     match from {
         LengthUnit::Cm => value,
